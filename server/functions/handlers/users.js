@@ -40,7 +40,7 @@ exports.signup = (req, res) => {
             };
         })
         .then(data => {
-            console.log(data.user);
+            console.log(data.user.uid);
             userId = data.user.uid
             return data.user.getIdToken();
         })

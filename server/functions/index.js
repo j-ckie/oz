@@ -11,30 +11,30 @@ const app = express();
 const cors = require("cors");
 app.use(cors());
 
-// firebase functions setup
+// ======= firebase functions setup =======
 const functions = require("firebase-functions");
 
-// firebase authentication
+// ======= firebase authentication =======
 const fbAuth = require("./util/firebaseAuth");
 
-// firebase admin setup
+// ======= firebase admin setup =======
 const { db, admin } = require("./util/admin");
 
-// user handlers
+// ======= user handlers =======
 const {
     signup,
     login
     //     viewUserDashboard
 } = require("./handlers/users")
 
-// entry handlers
+// ======= entry handlers =======
 // const {
 //     postEntry,
 //     entryWeek,
 //     entryMonth
 // } = require("./handlers/entries");
 
-// rating handlers
+// ======= rating handlers =======
 // const {
 //     postRating,
 //     postWeek,
@@ -47,16 +47,16 @@ app.post("/signup", signup);
 app.post("/login", login);
 // app.get("/user", fbAuth, viewUserDashboard);
 
-// entry routes
+// ======= entry routes =======
 // app.post("/entry", fbAuth, postEntry);
 // app.get("/entries/week", fbAuth, entryWeek);
 // app.get("/entries/month", fbAuth, entryMonth);
 
-// rating routes
+// ======= rating routes =======
 // app.post("/mood", fbAuth, postEntry);
 // app.get("/moods/week", fbAuth, postWeek);
 // app.get("/moods/month", fbAuth, postMonth);
 
 
-// firebase api setup
+// ======= firebase api setup =======
 exports.api = functions.https.onRequest(app);
