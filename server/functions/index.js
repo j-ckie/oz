@@ -28,11 +28,11 @@ const {
 } = require("./handlers/users")
 
 // ======= entry handlers =======
-// const {
-//     postEntry,
-//     entryWeek,
-//     entryMonth
-// } = require("./handlers/entries");
+const {
+    postGratitudeEntry
+    //     entryWeek,
+    //     entryMonth
+} = require("./handlers/entries");
 
 // ======= rating handlers =======
 // const {
@@ -48,7 +48,7 @@ app.post("/login", login);
 // app.get("/user", fbAuth, viewUserDashboard);
 
 // ======= entry routes =======
-// app.post("/entry", fbAuth, postEntry);
+app.post("/entry", fbAuth, postGratitudeEntry);
 // app.get("/entries/week", fbAuth, entryWeek);
 // app.get("/entries/month", fbAuth, entryMonth);
 
