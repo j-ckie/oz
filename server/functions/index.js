@@ -82,6 +82,7 @@ exports.dialogflowGateway = functions.https.onRequest((request, response) => {
 
         const result = responses[0].queryResult;
 
+
         // result.fulfillmentText
 
         response.send(result);
@@ -91,7 +92,7 @@ exports.dialogflowGateway = functions.https.onRequest((request, response) => {
 
 exports.dialogflowWebhook = functions.https.onRequest(async (request, response) => {
     const agent = new WebhookClient({ request, response });
-
+    console.log("req.body")
     console.log(JSON.stringify(request.body));
 
     const result = request.body.queryResult;
@@ -105,7 +106,9 @@ exports.dialogflowWebhook = functions.https.onRequest(async (request, response) 
     }
 
     async function userOnboardingHandler(agent) {
-        const profile = db.collection("users").doc(`/users/${}`);
+        let userSession = request.body.session;
+        let userEmail = userSession.split("/").pop();
+        const profile = db.collection("users").doc(userEmail);
 
         const { name, color } = result.parameters;
 
@@ -113,7 +116,6 @@ exports.dialogflowWebhook = functions.https.onRequest(async (request, response) 
         agent.add("WELCOME FUCK FACE")
     }
 
-    agent.add("PLEASE FOR THE LOVE OF ALL THINGS HOLY - WORK")
 
     let intentMap = new Map();
     intentMap.set("Default Welcome Intent", welcome);
