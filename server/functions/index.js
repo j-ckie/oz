@@ -8,17 +8,26 @@
 const express = require("express");
 const app = express();
 
-const cors = require("cors");
-app.use(cors());
-
-// ======= firebase functions setup =======
+const admin = require("firebase-admin");
+const cors = require("cors")({ origin: true });
 const functions = require("firebase-functions");
+const serviceAccount = require("./dialogflow-service-acc.json");
+
+admin.initializeApp({ //functions.config().firebase, 
+    credentials: admin.credential.cert(serviceAccount),
+    databaseURL: "https://the-oz-project.firebaseio.com"
+});
+
+const { SessionsClient } = require("dialogflow");
+
+const { WebhookClient } = require("dialogflow-fulfillment");
+
+const db = admin.firestore();
+
 
 // ======= firebase authentication =======
 const fbAuth = require("./util/firebaseAuth");
 
-// ======= firebase admin setup =======
-const { db, admin } = require("./util/admin");
 
 // ======= user handlers =======
 const {
@@ -48,7 +57,7 @@ app.post("/login", login);
 // app.get("/user", fbAuth, viewUserDashboard);
 
 // ======= entry routes =======
-app.post("/entry", fbAuth, postGratitudeEntry);
+app.post("/entry", postGratitudeEntry);
 // app.get("/entries/week", fbAuth, entryWeek);
 // app.get("/entries/month", fbAuth, entryMonth);
 
@@ -60,3 +69,57 @@ app.post("/entry", fbAuth, postGratitudeEntry);
 
 // ======= firebase api setup =======
 exports.api = functions.https.onRequest(app);
+
+exports.dialogflowGateway = functions.https.onRequest((request, response) => {
+    cors(request, response, async () => {
+        const { queryInput, sessionId } = request.body;
+
+        const sessionClient = new SessionsClient({ credentials: serviceAccount });
+
+        const session = sessionClient.sessionPath("the-oz-project", sessionId);
+
+        const responses = await sessionClient.detectIntent({ session, queryInput });
+
+        const result = responses[0].queryResult;
+
+        // result.fulfillmentText
+
+        response.send(result);
+    })
+})
+
+
+exports.dialogflowWebhook = functions.https.onRequest(async (request, response) => {
+    const agent = new WebhookClient({ request, response });
+
+    console.log(JSON.stringify(request.body));
+
+    const result = request.body.queryResult;
+
+    function welcome(agent) {
+        agent.add("Welcome to my agent!");
+    }
+
+    function fallback(agent) {
+        agent.add("Sorry, can you try again?");
+    }
+
+    async function userOnboardingHandler(agent) {
+        const profile = db.collection("users").doc(`/users/${}`);
+
+        const { name, color } = result.parameters;
+
+        await profile.set({ name, color });
+        agent.add("WELCOME FUCK FACE")
+    }
+
+    agent.add("PLEASE FOR THE LOVE OF ALL THINGS HOLY - WORK")
+
+    let intentMap = new Map();
+    intentMap.set("Default Welcome Intent", welcome);
+    intentMap.set("Default Fallback Intent", fallback);
+    intentMap.set("UpdateProfile", userOnboardingHandler);
+
+    agent.handleRequest(intentMap);
+
+})
