@@ -9,9 +9,11 @@ const express = require("express");
 const app = express();
 
 const admin = require("firebase-admin");
-const cors = require("cors")({ origin: true });
+const cors = require("cors") //({ origin: true });
 const functions = require("firebase-functions");
 const serviceAccount = require("./dialogflow-service-acc.json");
+
+app.use(cors());
 
 admin.initializeApp({ //functions.config().firebase, 
     credentials: admin.credential.cert(serviceAccount),
@@ -32,7 +34,8 @@ const fbAuth = require("./util/firebaseAuth");
 // ======= user handlers =======
 const {
     signup,
-    login
+    login,
+    getUserDetails
     //     viewUserDashboard
 } = require("./handlers/users")
 
@@ -55,6 +58,7 @@ const {
 app.post("/signup", signup);
 app.post("/login", login);
 // app.get("/user", fbAuth, viewUserDashboard);
+app.get("/user", fbAuth, getUserDetails);
 
 // ======= entry routes =======
 app.post("/entry", postGratitudeEntry);

@@ -1,4 +1,4 @@
-// const admin = require("firebase-admin");
+const admin = require("firebase-admin");
 // const cors = require("cors")({ origin: true});
 // const functions = require("firebase-functions");
 // const serviceAccount = require("../service-account.json");
@@ -11,6 +11,6 @@
 // const { SessionsClient } = require("dialogflow");
 
 
-// const db = admin.firestore();
+const db = admin.firestore();
 
-// module.exports = { admin, db };
+module.exports = { admin, db };
