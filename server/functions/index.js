@@ -74,8 +74,10 @@ app.post("/entry", postGratitudeEntry);
 // ======= firebase api setup =======
 exports.api = functions.https.onRequest(app);
 
+// ======= DIALOGFLOW ITEMS =======
 exports.dialogflowGateway = functions.https.onRequest((request, response) => {
     cors(request, response, async () => {
+        console.log(request);
         const { queryInput, sessionId } = request.body;
 
         const sessionClient = new SessionsClient({ credentials: serviceAccount });

@@ -3,9 +3,11 @@ import { SET_USER, SET_ERRORS, CLEAR_ERRORS, LOADING_UI, SET_UNAUTHENTICATED, LO
 import axios from "axios";
 
 export const loginUser = (userData) => (dispatch, history) => {
+    console.log("Trying to log in...")
     dispatch({ type: LOADING_UI });
     axios.post("https://us-central1-the-oz-project.cloudfunctions.net/api/login", userData)
         .then(res => {
+            console.log("Logging user in...")
             setAuthorizationHeader(res.data.token);
             dispatch(getUserData());
             dispatch({ type: CLEAR_ERRORS });

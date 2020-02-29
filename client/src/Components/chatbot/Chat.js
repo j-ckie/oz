@@ -14,7 +14,7 @@ class Chat extends Component {
             method: "POST",
             url: "/dialogflowGateway",
             data: {
-                "sessionId": "dookiedoo@da.org", //change me to user identifying data - token?
+                "token": "dookiedoo@da.org", //change me to user identifying data - token?
                 "queryInput": {
                     "text": {
                         "text": newMessage,
