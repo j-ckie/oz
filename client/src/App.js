@@ -14,7 +14,6 @@ import { logoutUser } from "./redux/actions/userActions";
 import login from "./pages/login";
 import signup from "./pages/signup";
 import home from "./pages/home";
-import chat from "./pages/chat";
 import AuthRoute from "./util/AuthRoute";
 import Navbar from "./Components/layout/Navbar";
 
@@ -23,12 +22,13 @@ import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 import themeFile from "./util/theme";
 
 import store from "./redux/store";
+import { dashboard } from './pages/dashboard';
 
 const theme = createMuiTheme(themeFile);
 
 axios.defaults.baseURL = "https://cors-anywhere.herokuapp.com/https://us-central1-the-oz-project.cloudfunctions.net/"
 
-const token = localStorage.fireBaseIDToken;
+const token = localStorage.FBIDToken;
 
 if (token) {
     const decodedToken = jwtDecode(token);
@@ -40,6 +40,9 @@ if (token) {
         axios.defaults.headers.common["Authorization"] = token;
         // store.dispatch()
     }
+
+    // console.log("Checking token...")
+    // console.log(token)
 }
 
 function App() {
@@ -51,9 +54,9 @@ function App() {
                     <div className="container">
                         <Switch>
                             <Route exact path="/" component={home} />
-                            <Route exact path="/login" component={login} />
-                            <Route exact path="/signup" component={signup} />
-                            <AuthRoute exact path="/chat" component={chat} />
+                            <AuthRoute path="/login" component={login} />
+                            <AuthRoute path="/signup" component={signup} />
+                            <Route exact path="/dashboard" component={dashboard} />
                         </Switch>
                     </div>
                 </BrowserRouter>

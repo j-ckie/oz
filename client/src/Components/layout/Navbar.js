@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
+import { logoutUser } from "../../redux/actions/userActions";
 
 // MUI
 import AppBar from "@material-ui/core/AppBar";
@@ -8,13 +9,22 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Button from "@material-ui/core/Button";
 import HomeIcon from "@material-ui/icons/Home";
 import ChatBubble from "@material-ui/icons/ChatBubble";
+import PowerOff from "@material-ui/icons/PowerOff";
 
 // REDUX
 import { connect } from "react-redux";
 
 export class Navbar extends Component {
+
+    handleLogout = () => {
+        this.props.logoutUser();
+    }
+
     render() {
         const { authenticated } = this.props;
+
+        console.log("Authenticated?????? Navbar")
+        console.log(this.props)
 
         return (
             <AppBar>
@@ -26,11 +36,10 @@ export class Navbar extends Component {
                                     <HomeIcon />
                                 </Button>
                             </Link>
-                            <Link to="/chat">
-                                <Button tip="Chat">
-                                    <ChatBubble />
-                                </Button>
-                            </Link>
+                            <Button tip="Chat" component={Link} to="/chat"><ChatBubble /></Button>
+                            <Button tip="Logout" onClick={this.handleLogout}>
+                                <PowerOff />
+                            </Button>
                         </Fragment>
                     ) : (
                             <Fragment>
@@ -45,11 +54,16 @@ export class Navbar extends Component {
 }
 
 Navbar.propTypes = {
-    authenticated: PropTypes.bool.isRequired
+    authenticated: PropTypes.bool.isRequired,
+    logoutUser: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => ({
     authenticated: state.user.authenticated
 })
 
-export default connect(mapStateToProps)(Navbar);
+const mapActionsToProps = {
+    logoutUser
+}
+
+export default connect(mapStateToProps, mapActionsToProps)(Navbar);
