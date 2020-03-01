@@ -1,15 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import axios from "axios";
 import jwtDecode from "jwt-decode";
 
 import "./App.css";
 
 import 'react-chat-widget/lib/styles.css';
-import { BrowserRouter, Switch, Route, NavLink } from 'react-router-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 import { Provider } from "react-redux";
 import { SET_AUTHENTICATED } from "./redux/types";
-import { logoutUser } from "./redux/actions/userActions";
+import { logoutUser, getUserData } from "./redux/actions/userActions";
 
 import login from "./pages/login";
 import signup from "./pages/signup";
@@ -23,7 +23,8 @@ import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 import themeFile from "./util/theme";
 
 import store from "./redux/store";
-import { Dashboard } from './pages/Dashboard';
+
+import Dashboard from './pages/Dashboard';
 
 const theme = createMuiTheme(themeFile);
 
@@ -39,7 +40,7 @@ if (token) {
     } else {
         store.dispatch({ type: SET_AUTHENTICATED });
         axios.defaults.headers.common["Authorization"] = token;
-        // store.dispatch()
+        store.dispatch(getUserData());
     }
 
     // console.log("Checking token...")
@@ -47,7 +48,7 @@ if (token) {
 }
 
 function App() {
-    let authStatus = token ? true : false;
+
     return (
         <Provider store={store}>
             <ThemeProvider theme={theme}>

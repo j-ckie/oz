@@ -91,36 +91,59 @@ exports.login = (req, res) => {
         });
 };
 
-exports.getUserDetails = (req, res) => {
-    let userData = {};
-    console.log(req.user)
+exports.viewUserDashboard = (req, res) => {
+    let userData = {}
     db.doc(`/users/${req.user.email}`)
         .get()
         .then(doc => {
             if (doc.exists) {
-                userData.user = doc.data();
-                return db
-                    .collection("entries")
+                userData.credentials = doc.data();
+
+                db.collection("entries")
                     .where("email", "==", req.user.email)
-                    .orderBy("createdAt", "desc")
-                    .get();
-            } else {
-                return res.status(404).json({ error: "User not found" });
+                    .get()
+                    .then(data => {
+                        userData.entries = [];
+                        data.forEach(doc => {
+                            userData.entries.push(doc.data());
+                        });
+                        return res.json(userData);
+                    })
             }
         })
-        .then(data => {
-            userData.entries = [];
-            data.forEach(doc => {
-                userData.entries.push({
-                    body: doc.data().body,
-                    createdAt: doc.data().createdAt,
-                    entryId: doc.id
-                })
-            })
-            return res.json(userData)
-        })
-        .catch(err => {
-            console.error(err);
-            return res.status(500).json({ error: err.code })
-        })
+
 }
+
+// exports.getUserDetails = (req, res) => {
+//     let userData = {};
+//     console.log(req.user)
+//     db.doc(`/users/${req.user.email}`)
+//         .get()
+//         .then(doc => {
+//             if (doc.exists) {
+//                 userData.user = doc.data();
+//                 return db
+//                     .collection("entries")
+//                     .where("email", "==", req.user.email)
+//                     .orderBy("createdAt", "desc")
+//                     .get();
+//             } else {
+//                 return res.status(404).json({ error: "User not found" });
+//             }
+//         })
+//         .then(data => {
+//             userData.entries = [];
+//             data.forEach(doc => {
+//                 userData.entries.push({
+//                     body: doc.data().body,
+//                     createdAt: doc.data().createdAt,
+//                     entryId: doc.id
+//                 })
+//             })
+//             return res.json(userData)
+//         })
+//         .catch(err => {
+//             console.error(err);
+//             return res.status(500).json({ error: err.code })
+//         })
+// }

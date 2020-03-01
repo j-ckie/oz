@@ -45,6 +45,7 @@ export class Navbar extends Component {
                             <Fragment>
                                 <Button component={Link} to="/">Home</Button>
                                 <Button component={Link} to="/login">Login</Button>
+                                <Button component={Link} to="/signup">Signup</Button>
                             </Fragment>
                         )}
                 </Toolbar>

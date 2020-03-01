@@ -9,7 +9,8 @@ export const loginUser = (userData) => (dispatch, history) => {
         .then(res => {
             console.log("Logging user in...")
             setAuthorizationHeader(res.data.token);
-            dispatch(getUserData());
+
+            dispatch(getUserData())
             dispatch({ type: CLEAR_ERRORS });
         })
         .catch(error => {
@@ -23,13 +24,13 @@ export const signupUser = (newUserData) => (dispatch, history) => {
     axios.post("https://us-central1-the-oz-project.cloudfunctions.net/api/signup", newUserData)
         .then(res => {
             setAuthorizationHeader(res.data.token);
-            dispatch(getUserData());
+            dispatch(getUserData())
             dispatch({ type: CLEAR_ERRORS });
             history.push("/");
         })
         .catch(err => {
             console.log(err)
-            dispatch({ type: SET_ERRORS, payload: err.data })
+            // dispatch({ type: SET_ERRORS, payload: err.data })
         })
 };
 

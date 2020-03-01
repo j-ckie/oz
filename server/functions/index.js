@@ -51,13 +51,14 @@ const fbAuth = require("./util/firebaseAuth");
 const {
     signup,
     login,
-    getUserDetails
-    //     viewUserDashboard
+    // getUserDetails,
+    viewUserDashboard
 } = require("./handlers/users")
 
 // ======= entry handlers =======
 const {
-    postGratitudeEntry
+    postGratitudeEntry,
+    getEntries
     //     entryWeek,
     //     entryMonth
 } = require("./handlers/entries");
@@ -73,11 +74,12 @@ const {
 // ======= user routes =======
 app.post("/signup", signup);
 app.post("/login", login);
-// app.get("/user", fbAuth, viewUserDashboard);
-app.get("/user", fbAuth, getUserDetails);
+app.get("/user", fbAuth, viewUserDashboard);
+// app.get("/user", fbAuth, getUserDetails);
 
 // ======= entry routes =======
 app.post("/entry", postGratitudeEntry);
+app.get("/entries", fbAuth, getEntries);
 // app.get("/entries/week", fbAuth, entryWeek);
 // app.get("/entries/month", fbAuth, entryMonth);
 
@@ -95,6 +97,8 @@ exports.dialogflowGateway = functions.https.onRequest((request, response) => {
     //cors(request, response, () => {
     console.log("begin gateway")
     let idToken;
+    let timeStamp = request.body.queryInput.timeStamp
+
 
     if (request.headers.authorization && request.headers.authorization.startsWith("Bearer ")) {
         idToken = request.headers.authorization.split("Bearer ")[1];
@@ -113,9 +117,9 @@ exports.dialogflowGateway = functions.https.onRequest((request, response) => {
                 .get()
                 .then(res => {
                     console.log("user")
-                    console.log(res)
 
-                    let sessionId = request.user.uid
+                    let sessionId = request.user.email + ":::" + timeStamp
+                    console.log(sessionId)
 
                     const { queryInput } = request.body;
 
@@ -163,13 +167,32 @@ exports.dialogflowWebhook = functions.https.onRequest(async (request, response) 
 
     async function userOnboardingHandler(agent) {
         let userSession = request.body.session;
-        let userEmail = userSession.split("/").pop();
+        let timeStamp = userSession.split(":::").pop();
+        let userEmail = userSession.split(":::").shift().split("/").pop();
+        console.log("timeStamp & User Email")
+        console.log(timeStamp)
+        console.log(userEmail)
         const profile = db.collection("users").doc(userEmail);
 
-        const { name, color } = result.parameters;
+        const { name } = result.parameters;
 
-        await profile.set({ name, color });
+        await profile.set({ name }, { merge: true });
         agent.add("WELCOME FUCK FACE")
+    }
+
+    async function logGratitude(agent) {
+        let userSession = request.body.session;
+        let timeStamp = userSession.split(":::").pop();
+        let userEmail = userSession.split(":::").shift().split("/").pop();
+
+        agent.add("Gratitude Logged!")
+    }
+    async function logMood(agent) {
+        let userSession = request.body.session;
+        let timeStamp = userSession.split(":::").pop();
+        let userEmail = userSession.split(":::").shift().split("/").pop();
+
+        agent.add("Mood Logged!")
     }
 
 
@@ -177,6 +200,8 @@ exports.dialogflowWebhook = functions.https.onRequest(async (request, response) 
     intentMap.set("Default Welcome Intent", welcome);
     intentMap.set("Default Fallback Intent", fallback);
     intentMap.set("UpdateProfile", userOnboardingHandler);
+    intentMap.set("LogGratitude", logGratitude);
+    intentMap.set("LogMood", logMood);
 
     agent.handleRequest(intentMap);
 
