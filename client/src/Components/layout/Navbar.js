@@ -8,8 +8,8 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Button from "@material-ui/core/Button";
 import HomeIcon from "@material-ui/icons/Home";
-import ChatBubble from "@material-ui/icons/ChatBubble";
-import PowerOff from "@material-ui/icons/PowerOff";
+import AppsIcon from "@material-ui/icons/Apps";
+import PowerOff from "@material-ui/icons/PowerSettingsNew";
 
 // REDUX
 import { connect } from "react-redux";
@@ -23,8 +23,8 @@ export class Navbar extends Component {
     render() {
         const { authenticated } = this.props;
 
-        console.log("Authenticated?????? Navbar")
-        console.log(this.props)
+        // console.log("Authenticated?????? Navbar")
+        // console.log(this.props)
 
         return (
             <AppBar>
@@ -36,7 +36,7 @@ export class Navbar extends Component {
                                     <HomeIcon />
                                 </Button>
                             </Link>
-                            <Button tip="Chat" component={Link} to="/chat"><ChatBubble /></Button>
+                            <Button tip="Chat" component={Link} to="/dashboard"><AppsIcon /></Button>
                             <Button tip="Logout" onClick={this.handleLogout}>
                                 <PowerOff />
                             </Button>

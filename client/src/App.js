@@ -5,7 +5,7 @@ import jwtDecode from "jwt-decode";
 import "./App.css";
 
 import 'react-chat-widget/lib/styles.css';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, NavLink } from 'react-router-dom';
 
 import { Provider } from "react-redux";
 import { SET_AUTHENTICATED } from "./redux/types";
@@ -15,6 +15,7 @@ import login from "./pages/login";
 import signup from "./pages/signup";
 import home from "./pages/home";
 import AuthRoute from "./util/AuthRoute";
+import UnAuthRoute from "./util/UnAuthRoute";
 import Navbar from "./Components/layout/Navbar";
 
 import { ThemeProvider } from "@material-ui/core/styles";
@@ -22,7 +23,7 @@ import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 import themeFile from "./util/theme";
 
 import store from "./redux/store";
-import { dashboard } from './pages/dashboard';
+import { Dashboard } from './pages/Dashboard';
 
 const theme = createMuiTheme(themeFile);
 
@@ -46,6 +47,7 @@ if (token) {
 }
 
 function App() {
+    let authStatus = token ? true : false;
     return (
         <Provider store={store}>
             <ThemeProvider theme={theme}>
@@ -56,7 +58,8 @@ function App() {
                             <Route exact path="/" component={home} />
                             <AuthRoute path="/login" component={login} />
                             <AuthRoute path="/signup" component={signup} />
-                            <Route exact path="/dashboard" component={dashboard} />
+                            {/* <Route exact path="/dashboard" render={props => <Dashboard {...props} authenticated={authStatus} />} /> */}
+                            <UnAuthRoute exact path="/dashboard" component={Dashboard} />
                         </Switch>
                     </div>
                 </BrowserRouter>

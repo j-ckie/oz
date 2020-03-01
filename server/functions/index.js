@@ -9,11 +9,27 @@ const express = require("express");
 const app = express();
 
 const admin = require("firebase-admin");
-const cors = require("cors") //({ origin: true });
+const cors = require("cors");//({ origin: true });
 const functions = require("firebase-functions");
 const serviceAccount = require("./dialogflow-service-acc.json");
 
-app.use(cors());
+var allowedOrigins = ['http://localhost:3000',
+    'https://us-central1-the-oz-project.cloudfunctions.net',
+    '*'];
+
+app.use(cors({
+    origin: function (origin, callback) {
+        // allow requests with no origin 
+        // (like mobile apps or curl requests)
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.indexOf(origin) === -1) {
+            var msg = 'The CORS policy for this site does not ' +
+                'allow access from the specified Origin.';
+            return callback(new Error(msg), false);
+        }
+        return callback(null, true);
+    }
+}));
 
 admin.initializeApp({ //functions.config().firebase, 
     credentials: admin.credential.cert(serviceAccount),
@@ -76,23 +92,57 @@ exports.api = functions.https.onRequest(app);
 
 // ======= DIALOGFLOW ITEMS =======
 exports.dialogflowGateway = functions.https.onRequest((request, response) => {
-    cors(request, response, async () => {
-        console.log(request);
-        const { queryInput, sessionId } = request.body;
+    //cors(request, response, () => {
+    console.log("begin gateway")
+    let idToken;
 
-        const sessionClient = new SessionsClient({ credentials: serviceAccount });
+    if (request.headers.authorization && request.headers.authorization.startsWith("Bearer ")) {
+        idToken = request.headers.authorization.split("Bearer ")[1];
+    } else {
+        console.error("No token found!");
+        return response.status(403).json({ error: "Unauthorized" });
+    }
 
-        const session = sessionClient.sessionPath("the-oz-project", sessionId);
+    admin.auth().verifyIdToken(idToken)
+        .then(decodedToken => {
+            request.user = decodedToken;
 
-        const responses = await sessionClient.detectIntent({ session, queryInput });
+            db.collection("users")
+                .where("userId", "==", request.user.uid)
+                .limit(1)
+                .get()
+                .then(res => {
+                    console.log("user")
+                    console.log(res)
 
-        const result = responses[0].queryResult;
+                    let sessionId = request.user.uid
+
+                    const { queryInput } = request.body;
+
+                    const sessionClient = new SessionsClient({ credentials: serviceAccount });
+
+                    const session = sessionClient.sessionPath("the-oz-project", sessionId);
+
+                    sessionClient.detectIntent({ session, queryInput }).then(responses => {
+
+                        const result = responses[0].queryResult;
+                        response.send(result);
+                    })
 
 
-        // result.fulfillmentText
+                })
 
-        response.send(result);
-    })
+
+        })
+        .then(data => {
+            console.log(data)
+            request.user.name = data.docs[0].data().name;
+            request.user.imageUrl = data.docs[0].data().imageUrl;
+        })
+        .catch(err => console.error(err));
+
+
+    //})
 })
 
 
@@ -131,3 +181,6 @@ exports.dialogflowWebhook = functions.https.onRequest(async (request, response) 
     agent.handleRequest(intentMap);
 
 })
+
+// sunday: 
+// USER EMAIL SHIT
