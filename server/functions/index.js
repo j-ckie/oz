@@ -177,7 +177,7 @@ exports.dialogflowWebhook = functions.https.onRequest(async (request, response) 
         const { name } = result.parameters;
 
         await profile.set({ name }, { merge: true });
-        agent.add("WELCOME FUCK FACE")
+        agent.add("WELCOME TO THE APP")
     }
 
     async function logGratitude(agent) {

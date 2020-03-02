@@ -74,6 +74,7 @@ class signup extends Component {
                             id="name"
                             name="name"
                             type="text"
+                            variant="outlined"
                             label="Name"
                             className={classes.textField}
                             helperText={errors.name}
@@ -84,7 +85,9 @@ class signup extends Component {
                         <TextField
                             id="email"
                             name="email"
-                            type="email" label="Email"
+                            type="email"
+                            variant="outlined"
+                            label="Email"
                             className={classes.textField}
                             helperText={errors.email}
                             error={errors.email ? true : false}
@@ -95,6 +98,7 @@ class signup extends Component {
                             id="password"
                             name="password"
                             type="password"
+                            variant="outlined"
                             label="Password"
                             className={classes.textField}
                             helperText={errors.password}
@@ -106,6 +110,7 @@ class signup extends Component {
                             id="confirmPassword"
                             name="confirmPassword"
                             type="password"
+                            variant="outlined"
                             label="Confirm password"
                             className={classes.textField}
                             helperText={errors.confirmPassword}

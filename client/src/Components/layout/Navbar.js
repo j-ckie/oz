@@ -10,9 +10,20 @@ import Button from "@material-ui/core/Button";
 import HomeIcon from "@material-ui/icons/Home";
 import AppsIcon from "@material-ui/icons/Apps";
 import PowerOff from "@material-ui/icons/PowerSettingsNew";
+import Typography from "@material-ui/core/Typography";
+import withStyles from "@material-ui/core/styles/withStyles";
+import Tooltip from "@material-ui/core/Tooltip";
 
 // REDUX
 import { connect } from "react-redux";
+
+const styles = (theme) => ({
+    ...theme.spreadThis,
+    title: {
+        color: "white",
+        marginRight: 20
+    }
+})
 
 export class Navbar extends Component {
 
@@ -21,7 +32,7 @@ export class Navbar extends Component {
     }
 
     render() {
-        const { authenticated } = this.props;
+        const { authenticated, classes } = this.props;
 
         // console.log("Authenticated?????? Navbar")
         // console.log(this.props)
@@ -32,20 +43,38 @@ export class Navbar extends Component {
                     {authenticated ? (
                         <Fragment>
                             <Link to="/">
-                                <Button tip="Home">
-                                    <HomeIcon />
-                                </Button>
+                                <Typography variant="h6" className={classes.title}>
+                                    theozproject
+                                </Typography>
                             </Link>
-                            <Button tip="Chat" component={Link} to="/dashboard"><AppsIcon /></Button>
-                            <Button tip="Logout" onClick={this.handleLogout}>
-                                <PowerOff />
-                            </Button>
+                            <Link to="/">
+                                <Tooltip title="Home">
+                                    <Button>
+                                        <HomeIcon style={{ color: "white" }} />
+                                    </Button>
+                                </Tooltip>
+                            </Link>
+                            <Tooltip title="Dashboard">
+                                <Button component={Link} to="/dashboard">
+                                    <AppsIcon style={{ color: "white" }} />
+                                </Button>
+                            </Tooltip>
+                            <Tooltip title="Logout">
+                                <Button onClick={this.handleLogout}>
+                                    <PowerOff style={{ color: "white" }} />
+                                </Button>
+                            </Tooltip>
                         </Fragment>
                     ) : (
                             <Fragment>
-                                <Button component={Link} to="/">Home</Button>
-                                <Button component={Link} to="/login">Login</Button>
-                                <Button component={Link} to="/signup">Signup</Button>
+                                <Link to="/">
+                                    <Typography variant="h6" className={classes.title}>
+                                        theozproject
+                                </Typography>
+                                </Link>
+                                <Button style={{ color: "white" }} component={Link} to="/">Home</Button>
+                                <Button style={{ color: "white" }} component={Link} to="/login">Login</Button>
+                                <Button style={{ color: "white" }} component={Link} to="/signup">Signup</Button>
                             </Fragment>
                         )}
                 </Toolbar>
@@ -56,7 +85,8 @@ export class Navbar extends Component {
 
 Navbar.propTypes = {
     authenticated: PropTypes.bool.isRequired,
-    logoutUser: PropTypes.func.isRequired
+    logoutUser: PropTypes.func.isRequired,
+    classes: PropTypes.object.isRequired
 }
 
 const mapStateToProps = (state) => ({
@@ -67,4 +97,4 @@ const mapActionsToProps = {
     logoutUser
 }
 
-export default connect(mapStateToProps, mapActionsToProps)(Navbar);
+export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(Navbar));
