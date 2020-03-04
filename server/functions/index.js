@@ -177,7 +177,8 @@ exports.dialogflowWebhook = functions.https.onRequest(async (request, response) 
         const { name } = result.parameters;
 
         await profile.set({ name }, { merge: true });
-        agent.add("WELCOME TO THE APP")
+
+        agent.add("Profile updated!")
     }
 
     async function logGratitude(agent) {
@@ -185,12 +186,58 @@ exports.dialogflowWebhook = functions.https.onRequest(async (request, response) 
         let timeStamp = userSession.split(":::").pop();
         let userEmail = userSession.split(":::").shift().split("/").pop();
 
+
+        const { Gratitude } = result.parameters;
+
+        let newEntry = {
+            body: Gratitude,
+            email: userEmail,
+            createdAt: new Date().toISOString()
+        }
+
+        db.collection("entries")
+            .add(newEntry)
+            .then(doc => {
+                let resEntry = newEntry;
+
+                resEntry.entryId = doc.id;
+                res.json({ resEntry });
+            })
+            .catch(err => {
+                console.error(err)
+                res.status(500).json({ error: `Something went wrong when adding the entry` })
+            })
+
+
+
         agent.add("Gratitude Logged!")
     }
     async function logMood(agent) {
         let userSession = request.body.session;
         let timeStamp = userSession.split(":::").pop();
         let userEmail = userSession.split(":::").shift().split("/").pop();
+
+
+        const { mood } = result.parameters;
+
+        let newEntry = {
+            mood: mood,
+            email: userEmail,
+            createdAt: new Date().toISOString()
+        }
+
+        db.collection("entries")
+            .add(newEntry)
+            .then(doc => {
+                let resEntry = newEntry;
+
+                resEntry.entryId = doc.id;
+                res.json({ resEntry });
+            })
+            .catch(err => {
+                console.error(err)
+                res.status(500).json({ error: `Something went wrong when adding the entry` })
+            })
 
         agent.add("Mood Logged!")
     }

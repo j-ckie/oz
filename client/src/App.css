@@ -50,6 +50,7 @@ p {
     font-family: "Abril Fatface";
     letter-spacing: 0.15rem;
     font-size: 2rem;
+    margin-top: 0;
     margin-bottom: 0;
     color: #1ea4b6;
 }
@@ -67,6 +68,31 @@ p {
     margin-top: 0;
 }
 
+.spacer {
+    height: 10rem;
+}
+
+.videoPlayer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.title {
+    color:white;
+    margin-right: 50px;
+}
+
+.card-def {
+    min-width: 275px;
+    padding: 15px;
+}
+
+iframe {
+   width: 660px;
+   height: 415px;
+   margin: 3rem 0;
+}
 
 @media screen and (max-width: 800px) {
     .rcw-conversation-container {
@@ -74,4 +100,8 @@ p {
         height: 100vh;
         width:100vw;
     }
+    iframe {
+        width: 350px;
+        height: 190px;
+     }
 }

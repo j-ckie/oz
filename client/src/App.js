@@ -62,6 +62,7 @@ function App() {
                             {/* <Route exact path="/dashboard" render={props => <Dashboard {...props} authenticated={authStatus} />} /> */}
                             <UnAuthRoute exact path="/dashboard" component={Dashboard} />
                         </Switch>
+                        <div className="spacer"></div>
                     </div>
                 </BrowserRouter>
             </ThemeProvider>

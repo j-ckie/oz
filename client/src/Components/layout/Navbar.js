@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-import { logoutUser } from "../../redux/actions/userActions";
 
 // MUI
 import AppBar from "@material-ui/core/AppBar";
@@ -15,37 +14,40 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import Tooltip from "@material-ui/core/Tooltip";
 
 // REDUX
+import { logoutUser } from "../../redux/actions/userActions";
 import { connect } from "react-redux";
 
 const styles = (theme) => ({
     ...theme.spreadThis,
     title: {
-        color: "white",
-        marginRight: 20
+        marginRight: 20,
+        color: "white"
+    },
+    stickToTop: {
+        top: 0
     }
-})
+});
 
 export class Navbar extends Component {
 
     handleLogout = () => {
         this.props.logoutUser();
-    }
+    };
 
     render() {
+
         const { authenticated, classes } = this.props;
 
-        // console.log("Authenticated?????? Navbar")
-        // console.log(this.props)
-
         return (
-            <AppBar>
+            <AppBar position="fixed" className={classes.stickToTop}>
                 <Toolbar>
+                    <Typography variant="h6" className={classes.title}>
+                        theozproject
+                    </Typography>
                     {authenticated ? (
                         <Fragment>
                             <Link to="/">
-                                <Typography variant="h6" className={classes.title}>
-                                    theozproject
-                                </Typography>
+
                             </Link>
                             <Link to="/">
                                 <Tooltip title="Home">
@@ -67,11 +69,6 @@ export class Navbar extends Component {
                         </Fragment>
                     ) : (
                             <Fragment>
-                                <Link to="/">
-                                    <Typography variant="h6" className={classes.title}>
-                                        theozproject
-                                </Typography>
-                                </Link>
                                 <Button style={{ color: "white" }} component={Link} to="/">Home</Button>
                                 <Button style={{ color: "white" }} component={Link} to="/login">Login</Button>
                                 <Button style={{ color: "white" }} component={Link} to="/signup">Signup</Button>
@@ -84,17 +81,17 @@ export class Navbar extends Component {
 }
 
 Navbar.propTypes = {
-    authenticated: PropTypes.bool.isRequired,
+    authenticated: PropTypes.object.isRequired,
     logoutUser: PropTypes.func.isRequired,
     classes: PropTypes.object.isRequired
-}
+};
 
 const mapStateToProps = (state) => ({
     authenticated: state.user.authenticated
-})
+});
 
-const mapActionsToProps = {
+const mapActionToProps = {
     logoutUser
-}
+};
 
-export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(Navbar));
+export default connect(mapStateToProps, mapActionToProps)(withStyles(styles)(Navbar));
