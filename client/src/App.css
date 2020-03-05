@@ -94,6 +94,16 @@ iframe {
    margin: 3rem 0;
 }
 
+.start-journey {
+    position: relative;
+}
+
+.start-journey img {
+    width: 600px;
+    position: absolute;
+    left: 450px;
+}
+
 @media screen and (max-width: 800px) {
     .rcw-conversation-container {
         margin-top: 55px;
@@ -104,4 +114,10 @@ iframe {
         width: 350px;
         height: 190px;
      }
+
+     .start-journey img {
+        width: 200px;
+        position: absolute;
+        left: 70px;
+    }
 }

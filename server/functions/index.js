@@ -157,6 +157,48 @@ exports.dialogflowWebhook = functions.https.onRequest(async (request, response) 
 
     const result = request.body.queryResult;
 
+    function addGratitudeEntry(entry, userEmail) {
+        let newEntry = {
+            body: entry,
+            email: userEmail,
+            createdAt: new Date().toISOString()
+        }
+
+        db.collection("entries")
+            .add(newEntry)
+            .then(doc => {
+                let resEntry = newEntry;
+
+                resEntry.entryId = doc.id;
+                res.json({ resEntry });
+            })
+            .catch(err => {
+                console.error(err)
+                res.status(500).json({ error: `Something went wrong when adding the entry` })
+            })
+    }
+
+    function addMoodEntry(entry, userEmail) {
+        let newEntry = {
+            mood: entry,
+            email: userEmail,
+            createdAt: new Date().toISOString()
+        }
+
+        db.collection("moods")
+            .add(newEntry)
+            .then(doc => {
+                let resEntry = newEntry;
+
+                resEntry.entryId = doc.id;
+                res.json({ resEntry });
+            })
+            .catch(err => {
+                console.error(err)
+                res.status(500).json({ error: `Something went wrong when adding the entry` })
+            })
+    }
+
     function welcome(agent) {
         agent.add("Welcome to my agent!");
     }
@@ -188,25 +230,28 @@ exports.dialogflowWebhook = functions.https.onRequest(async (request, response) 
 
 
         const { Gratitude } = result.parameters;
+        console.log(result.parameters)
 
-        let newEntry = {
-            body: Gratitude,
-            email: userEmail,
-            createdAt: new Date().toISOString()
-        }
+        addGratitudeEntry(Gratitude, userEmail);
 
-        db.collection("entries")
-            .add(newEntry)
-            .then(doc => {
-                let resEntry = newEntry;
+        // let newEntry = {
+        //     body: Gratitude,
+        //     email: userEmail,
+        //     createdAt: new Date().toISOString()
+        // }
 
-                resEntry.entryId = doc.id;
-                res.json({ resEntry });
-            })
-            .catch(err => {
-                console.error(err)
-                res.status(500).json({ error: `Something went wrong when adding the entry` })
-            })
+        // db.collection("entries")
+        //     .add(newEntry)
+        //     .then(doc => {
+        //         let resEntry = newEntry;
+
+        //         resEntry.entryId = doc.id;
+        //         res.json({ resEntry });
+        //     })
+        //     .catch(err => {
+        //         console.error(err)
+        //         res.status(500).json({ error: `Something went wrong when adding the entry` })
+        //     })
 
 
 
@@ -219,27 +264,30 @@ exports.dialogflowWebhook = functions.https.onRequest(async (request, response) 
 
 
         const { mood } = result.parameters;
+        console.log(result.parameters);
 
-        let newEntry = {
-            mood: mood,
-            email: userEmail,
-            createdAt: new Date().toISOString()
-        }
+        addMoodEntry(mood, userEmail);
 
-        db.collection("entries")
-            .add(newEntry)
-            .then(doc => {
-                let resEntry = newEntry;
+        // let newEntry = {
+        //     mood: mood,
+        //     email: userEmail,
+        //     createdAt: new Date().toISOString()
+        // }
 
-                resEntry.entryId = doc.id;
-                res.json({ resEntry });
-            })
-            .catch(err => {
-                console.error(err)
-                res.status(500).json({ error: `Something went wrong when adding the entry` })
-            })
+        // db.collection("entries")
+        //     .add(newEntry)
+        //     .then(doc => {
+        //         let resEntry = newEntry;
 
-        agent.add("Mood Logged!")
+        //         resEntry.entryId = doc.id;
+        //         res.json({ resEntry });
+        //     })
+        //     .catch(err => {
+        //         console.error(err)
+        //         res.status(500).json({ error: `Something went wrong when adding the entry` })
+        //     })
+
+        // agent.add("Mood Logged!")
     }
 
 

@@ -57,6 +57,10 @@ class home extends Component {
                         </span>
                         <p>This video was the inspiration behind theozproject as I wanted a way to keep track of my own gratitude entries for future reflection.</p>
                         <p>Since starting my own gratitude journal, I've noticed considerable improvement on my own mental wellbeing and hope that this application can help those that want to take the first steps on this journey.</p>
+                        <div className="start-journey">
+                            <p>So what are you waiting for? Let's get going!</p>
+                            <img src="https://i.imgur.com/z6rUeCQ.png" alt="Journey" />
+                        </div>
 
                     </div>
                 </Grid>

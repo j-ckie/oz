@@ -41,9 +41,11 @@ export class Navbar extends Component {
         return (
             <AppBar position="fixed" className={classes.stickToTop}>
                 <Toolbar>
-                    <Typography variant="h6" className={classes.title}>
-                        theozproject
-                    </Typography>
+                    <Link to="/">
+                        <Typography variant="h6" className={classes.title}>
+                            theozproject
+                        </Typography>
+                    </Link>
                     {authenticated ? (
                         <Fragment>
                             <Link to="/">
@@ -75,7 +77,7 @@ export class Navbar extends Component {
                             </Fragment>
                         )}
                 </Toolbar>
-            </AppBar>
+            </AppBar >
         )
     }
 }

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Widget, addResponseMessage, addLinkSnippet, addUserMessage } from 'react-chat-widget';
+import { Widget, addResponseMessage, addLinkSnippet, addUserMessage, toggleMsgLoader } from 'react-chat-widget';
 import axios from "axios";
 import store from "../../redux/store";
+import avatar from "../../img/oz-chat.png";
 
 class Chat extends Component {
 
@@ -16,11 +17,13 @@ class Chat extends Component {
     componentDidMount() {
         addResponseMessage("Welcome to this awesome chat!");
         addResponseMessage(this.state.timestamp)
+
     }
 
     handleNewUserMessage = (newMessage) => {
 
         console.log(`New message incoming! ${newMessage}`);
+        toggleMsgLoader();
         // Now send the message throught the backend API
         axios({
             method: "POST",
@@ -38,6 +41,7 @@ class Chat extends Component {
             .then(res => {
                 console.log(res)
                 let botResponse = res.data.fulfillmentText;
+                toggleMsgLoader();
                 addResponseMessage(botResponse);
             })
             .catch(err => console.error(err));
@@ -52,6 +56,7 @@ class Chat extends Component {
                     title="Gratitude Journal!"
                     subtitle="Log your worries away"
                     className="ChatWidget"
+                    profileAvatar={avatar}
                 />
             </div>
         );
