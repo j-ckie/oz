@@ -170,11 +170,11 @@ exports.dialogflowWebhook = functions.https.onRequest(async (request, response) 
                 let resEntry = newEntry;
 
                 resEntry.entryId = doc.id;
-                res.json({ resEntry });
+                response.json({ resEntry });
             })
             .catch(err => {
                 console.error(err)
-                res.status(500).json({ error: `Something went wrong when adding the entry` })
+                response.status(500).json({ error: `Something went wrong when adding the entry` })
             })
     }
 
@@ -232,26 +232,26 @@ exports.dialogflowWebhook = functions.https.onRequest(async (request, response) 
         const { Gratitude } = result.parameters;
         console.log(result.parameters)
 
-        addGratitudeEntry(Gratitude, userEmail);
+        // addGratitudeEntry(Gratitude, userEmail);
 
-        // let newEntry = {
-        //     body: Gratitude,
-        //     email: userEmail,
-        //     createdAt: new Date().toISOString()
-        // }
+        let newEntry = {
+            body: Gratitude,
+            email: userEmail,
+            createdAt: new Date().toISOString()
+        }
 
-        // db.collection("entries")
-        //     .add(newEntry)
-        //     .then(doc => {
-        //         let resEntry = newEntry;
+        db.collection("entries")
+            .add(newEntry)
+            .then(doc => {
+                let resEntry = newEntry;
 
-        //         resEntry.entryId = doc.id;
-        //         res.json({ resEntry });
-        //     })
-        //     .catch(err => {
-        //         console.error(err)
-        //         res.status(500).json({ error: `Something went wrong when adding the entry` })
-        //     })
+                resEntry.entryId = doc.id;
+                res.json({ resEntry });
+            })
+            .catch(err => {
+                console.error(err)
+                res.status(500).json({ error: `Something went wrong when adding the entry` })
+            })
 
 
 
@@ -266,28 +266,28 @@ exports.dialogflowWebhook = functions.https.onRequest(async (request, response) 
         const { mood } = result.parameters;
         console.log(result.parameters);
 
-        addMoodEntry(mood, userEmail);
+        // addMoodEntry(mood, userEmail);
 
-        // let newEntry = {
-        //     mood: mood,
-        //     email: userEmail,
-        //     createdAt: new Date().toISOString()
-        // }
+        let newEntry = {
+            mood: mood,
+            email: userEmail,
+            createdAt: new Date().toISOString()
+        }
 
-        // db.collection("entries")
-        //     .add(newEntry)
-        //     .then(doc => {
-        //         let resEntry = newEntry;
+        db.collection("moods")
+            .add(newEntry)
+            .then(doc => {
+                let resEntry = newEntry;
 
-        //         resEntry.entryId = doc.id;
-        //         res.json({ resEntry });
-        //     })
-        //     .catch(err => {
-        //         console.error(err)
-        //         res.status(500).json({ error: `Something went wrong when adding the entry` })
-        //     })
+                resEntry.entryId = doc.id;
+                response.json({ resEntry });
+            })
+            .catch(err => {
+                console.error(err)
+                response.status(500).json({ error: `Something went wrong when adding the entry` })
+            })
 
-        // agent.add("Mood Logged!")
+        agent.add("Mood Logged!")
     }
 
 
