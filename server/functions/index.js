@@ -301,6 +301,3 @@ exports.dialogflowWebhook = functions.https.onRequest(async (request, response) 
     agent.handleRequest(intentMap);
 
 })
-
-// sunday: 
-// USER EMAIL SHIT

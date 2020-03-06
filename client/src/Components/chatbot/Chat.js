@@ -15,7 +15,7 @@ class Chat extends Component {
     }
 
     componentDidMount() {
-        addResponseMessage("Welcome to this awesome chat!");
+        addResponseMessage("Welcome! Feel free to get started by typing 'I want to create a gratitude entry' or 'I want to record my mood for the day'!");
         addResponseMessage(this.state.timestamp)
 
     }
