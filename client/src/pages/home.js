@@ -59,7 +59,7 @@ class home extends Component {
                         <p>Since starting my own gratitude journal, I've noticed considerable improvement on my own mental wellbeing and hope that this application can help those that want to take the first steps on this journey.</p>
                         <div className="start-journey">
                             <p>So what are you waiting for? Let's get going!</p>
-                            <img src="https://i.imgur.com/z6rUeCQ.png" alt="Journey" />
+                            <img src="https://i.imgur.com/z6rUeCQ.png" alt="Journey" className="oz-journey" />
                         </div>
 
                     </div>

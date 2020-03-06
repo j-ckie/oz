@@ -96,12 +96,12 @@ iframe {
 
 .start-journey {
     position: relative;
+    width: 100%;
 }
 
-.start-journey img {
-    width: 600px;
-    position: absolute;
-    left: 450px;
+.oz-journey {
+    width: 350px;
+    float: right;
 }
 
 @media screen and (max-width: 800px) {
