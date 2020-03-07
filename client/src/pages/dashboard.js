@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Chat from "../Components/chatbot/Chat";
-import EntryHistory from "../Components/dashboard/EntryHistory";
+import EntryCarousel from "../Components/dashboard/EntryCarousel";
 
 // mui
 import Typography from "@material-ui/core/Typography";
@@ -9,37 +9,17 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import CardHeader from "@material-ui/core/CardHeader";
 
-import Swiper from 'react-id-swiper';
-import "swiper/css/swiper.css";
-
 // redux
 import store from "../redux/store";
-import { getGratitudeEntries } from "../redux/actions/chatActions";
 
 function Dashboard(props) {
     const state = store.getState()
-    const { user: { entries, loading, credentials: { email, name } } } = state;
+    const { user: { entries, credentials: { name } } } = state;
 
-
-    // console.log(state.user.credentials)
     console.log("ENTRIES:")
     console.log(entries)
     console.log("STATE")
     console.log(state);
-
-    let entryMarkup = !loading ? (
-        entries.map(entry => <EntryHistory key={entry.createdAt} entries={entry} />)
-    ) : <p>Loading...</p>
-
-
-
-    //console.log("entryMarkup")
-    //console.log(entryMarkup)
-
-
-    // console.log(entryMarkup[0])
-
-
 
     return (
         <Grid container spacing={2} >
@@ -53,9 +33,9 @@ function Dashboard(props) {
                 <Card className="dashboard-card card">
                     <CardContent className="content">
                         <CardHeader title="Previous Gratitude Entries" />
-                        <Swiper>
-                            {entryMarkup}
-                        </Swiper>
+
+                        <EntryCarousel />
+
                     </CardContent>
                 </Card>
                 <Chat />
