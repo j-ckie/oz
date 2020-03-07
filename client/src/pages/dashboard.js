@@ -25,14 +25,12 @@ function Dashboard(props) {
         <Grid container spacing={2} >
             <Grid item xs={1} sm={2} />
             <Grid item xs={10} sm={8}>
-                <Typography variant="h2">Dashboard</Typography>
-                <Typography variant="body2">Welcome {name}</Typography>
-
-
+                <Typography variant="h2">Dashboard <span className="accent centered small-h4">Welcome {name}!</span></Typography>
+                <br />
 
                 <Card className="dashboard-card card">
                     <CardContent className="content">
-                        <CardHeader title="Previous Gratitude Entries" />
+                        <CardHeader title="I am grateful for..." />
 
                         <EntryCarousel />
 

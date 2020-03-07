@@ -41,9 +41,17 @@ p {
     font-style: italic;
 }
 
+.centered {
+    text-align: center;
+}
+
 .question {
     font-size: 2.5rem;
     line-height: 3rem;
+}
+
+.small-h4 {
+    font-size: 2rem;
 }
 
 .definition {
@@ -132,7 +140,6 @@ iframe {
     display: flex;
     justify-content: center;
     width: 50%;
-    background-color: #fff;
 }
 
 /* .entry-history {
