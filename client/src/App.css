@@ -104,6 +104,31 @@ iframe {
     float: right;
 }
 
+.dashboard-card {
+
+}
+
+.card {
+    position: "relative";
+    margin-bottom: 20px;
+}
+
+.content {
+    padding: 25px;
+}
+
+.entry-date {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: .5rem;
+}
+
+
+  
+  .slick-slide p {
+    margin: auto;
+  }
+
 @media screen and (max-width: 800px) {
     .rcw-conversation-container {
         margin-top: 55px;

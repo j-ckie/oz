@@ -156,6 +156,7 @@ exports.dialogflowWebhook = functions.https.onRequest(async (request, response) 
     console.log(JSON.stringify(request.body));
 
     const result = request.body.queryResult;
+    const context = request.body.queryResult.outputContexts;
 
     function addGratitudeEntry(entry, userEmail) {
         let newEntry = {
@@ -229,33 +230,43 @@ exports.dialogflowWebhook = functions.https.onRequest(async (request, response) 
         let userEmail = userSession.split(":::").shift().split("/").pop();
 
 
-        const { Gratitude } = result.parameters;
-        console.log(result.parameters)
+        const { Gratitude1, Gratitude2, Gratitude3 } = context[0].parameters;
+        console.log("logGratitude function context")
+        console.log(context)
+
+        let GratitudeList = [Gratitude1, Gratitude2, Gratitude3]
+        console.log(GratitudeList)
 
         // addGratitudeEntry(Gratitude, userEmail);
+        GratitudeList.forEach(element => {
+            if (element !== null) {
+                let newEntry = {
+                    body: element,
+                    email: userEmail,
+                    createdAt: new Date().toISOString()
+                }
 
-        let newEntry = {
-            body: Gratitude,
-            email: userEmail,
-            createdAt: new Date().toISOString()
-        }
+                db.collection("entries")
+                    .add(newEntry)
+                    .then(doc => {
+                        let resEntry = newEntry;
 
-        db.collection("entries")
-            .add(newEntry)
-            .then(doc => {
-                let resEntry = newEntry;
-
-                resEntry.entryId = doc.id;
-                res.json({ resEntry });
-            })
-            .catch(err => {
-                console.error(err)
-                res.status(500).json({ error: `Something went wrong when adding the entry` })
-            })
+                        resEntry.entryId = doc.id;
+                        response.json({ resEntry });
+                        console.log("Gratitude Logged")
+                    })
+                    .catch(err => {
+                        console.error(err)
+                        response.status(500).json({ error: `Something went wrong when adding the entry` })
+                    })
 
 
 
-        agent.add("Gratitude Logged!")
+
+                agent.add("Gratitude Logged!")
+            }
+        });
+
     }
     async function logMood(agent) {
         let userSession = request.body.session;
@@ -295,7 +306,17 @@ exports.dialogflowWebhook = functions.https.onRequest(async (request, response) 
     intentMap.set("Default Welcome Intent", welcome);
     intentMap.set("Default Fallback Intent", fallback);
     intentMap.set("UpdateProfile", userOnboardingHandler);
-    intentMap.set("LogGratitude", logGratitude);
+
+    //Gratitude specific functions, All fullfillment enabled gratitude functions for Dialogflow
+    //intentMap.set("LogGratitude", logGratitude);
+    intentMap.set("LogGratitude-first-stop", logGratitude);  //user stopped after first entry, 1 entry to submit
+    intentMap.set("LogGratitude-first-second-stop", logGratitude); //user stopped after second entry, 2 entries to submit
+    intentMap.set("LogGratitude-first-second-third", logGratitude); //full flow, 3 entries to submit.
+
+    intentMap.set("LogGratitude.first.second.third", logGratitude);
+
+
+
     intentMap.set("LogMood", logMood);
 
     agent.handleRequest(intentMap);

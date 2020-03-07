@@ -136,7 +136,7 @@ class signup extends Component {
                         </Button>
                         <br />
                         <br />
-                        <small className={classes.smallText}>Already have an account? Login <Link to="/login">here</Link></small>
+                        <small className={classes.smallText}>Already have an account? Login <Link to="/login"><span className="accent">here</span></Link></small>
                     </form>
                 </Grid>
                 <Grid item sm />
