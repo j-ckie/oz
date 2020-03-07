@@ -104,10 +104,6 @@ iframe {
     float: right;
 }
 
-.dashboard-card {
-
-}
-
 .card {
     position: "relative";
     margin-bottom: 20px;
@@ -117,17 +113,31 @@ iframe {
     padding: 25px;
 }
 
+.entry-content {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    width: 50%;
+    padding: 25px 25px 50px 25px;
+    text-align: left;
+}
+
 .entry-date {
     margin-top: 0;
     margin-bottom: 10px;
     font-size: .5rem;
 }
 
+.swiper-slide {
+    display: flex;
+    justify-content: center;
+    width: 50%;
+    background-color: #fff;
+}
 
-  
-  .slick-slide p {
-    margin: auto;
-  }
+/* .entry-history {
+    padding: 5rem;
+}  */
 
 @media screen and (max-width: 800px) {
     .rcw-conversation-container {

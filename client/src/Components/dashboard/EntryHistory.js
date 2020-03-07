@@ -46,18 +46,16 @@ function EntryHistory(entry) {
 
     return (
 
-        <Card className="card">
-            <CardContent className="content">
-                <p className="entry-date">
-                    Created: {dayjs(dateCreated).format('dddd, MMMM D, YYYY')}
-                </p>
-                <Typography variant="body1">
-                    {JSON.stringify(entry.entries.body)}
-                </Typography>
-            </CardContent>
-        </Card>
+        <div className="entry-content">
+            <p className="entry-date">
+                Created: {dayjs(dateCreated).format('ddd, MMM. D, YYYY')}
+            </p>
+            <Typography variant="body1">
+                {JSON.stringify(entry.entries.body)}
+            </Typography>
+        </div>
 
-        // entry.entries.body
+
 
 
 

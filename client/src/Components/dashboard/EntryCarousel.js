@@ -3,6 +3,10 @@ import EntryHistory from "./EntryHistory";
 import Swiper from 'react-id-swiper';
 import "swiper/css/swiper.css";
 
+// MUI
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+
 // redux
 import store from "../../redux/store";
 
@@ -16,14 +20,27 @@ function EntryCarousel(data) {
     console.log("STATE")
     console.log(state);
 
-    let entryMarkup = !loading ? (
-        entries.map(entry => <EntryHistory key={entry.createdAt} entries={entry} />)
-    ) : <p>Loading...</p>
+    const params = {
+        pagination: {
+            el: ".swiper-pagination",
+            type: "fraction"
+        },
+        navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev"
+        }
+    }
 
     return (
-        <Swiper>
-            {entryMarkup}
-        </Swiper>
+        <Card className="card">
+            <CardContent className="content">
+                <Swiper {...params}>
+
+                    {entries.map(entry => <div className="entry-history"><EntryHistory entries={entry} /></div>)}
+
+                </Swiper>
+            </CardContent>
+        </Card>
     )
 
 }
