@@ -1,4 +1,4 @@
-import { SET_CHAT_TIMESTAMP, SEND_GRATITUDE_ENTRY, GET_GRATITUDE_ENTRIES, LOADING_DATA } from "../types";
+import { SET_CHAT_TIMESTAMP, SEND_GRATITUDE_ENTRY, GET_GRATITUDE_ENTRIES, LOADING_DATA, GET_MOOD_RECORDS } from "../types";
 
 const initialState = {
     timestamp: null,

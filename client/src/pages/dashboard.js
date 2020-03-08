@@ -10,17 +10,19 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import CardHeader from "@material-ui/core/CardHeader";
 
+import MoodGraph from "../Components/dashboard/MoodGraph";
+
 // redux
 import store from "../redux/store";
 
 function Dashboard(props) {
     const state = store.getState()
-    const { user: { entries, credentials: { name } } } = state;
+    const { user: { entries, moods, credentials: { name } } } = state;
 
     console.log("ENTRIES:")
     console.log(entries)
-    console.log("STATE")
-    console.log(state);
+    console.log("MOODS")
+    console.log(moods);
 
     return (
         <Grid container spacing={2} >
@@ -33,7 +35,9 @@ function Dashboard(props) {
                 </div>
                 <h2 className="accent thin">I am grateful for...</h2>
                 <div className="spacer-sm"></div>
-                <EntryCarousel />
+                <EntryCarousel moods={moods} />
+                <div className="spacer"></div>
+                <MoodGraph />
                 <Chat />
             </Grid>
             <Grid item xs={1} sm={2} />

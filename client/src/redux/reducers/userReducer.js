@@ -1,9 +1,10 @@
-import { SET_USER, SET_AUTHENTICATED, SET_UNAUTHENTICATED, LOADING_USER } from "../types";
+import { SET_USER, SET_AUTHENTICATED, SET_UNAUTHENTICATED, LOADING_USER, GET_MOOD_RECORDS } from "../types";
 
 const initialState = {
     authenticated: false,
     loading: false,
-    credentials: {}
+    credentials: {},
+    moods: []
 }
 
 export default function (state = initialState, action) {
@@ -20,6 +21,12 @@ export default function (state = initialState, action) {
                 authenticated: true,
                 loading: false,
                 ...action.payload
+            }
+        case GET_MOOD_RECORDS:
+            return {
+                ...state,
+                moods: action.payload,
+                loading: false
             }
         case LOADING_USER:
             return {

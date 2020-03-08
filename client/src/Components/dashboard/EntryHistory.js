@@ -1,20 +1,11 @@
-import React, { Component } from 'react';
-import { Link } from "react-router-dom";
+import React from 'react';
 import PropTypes from "prop-types";
 import * as dayjs from "dayjs";
 
 // MUI
-import Card from "@material-ui/core/Card";
-import CardHeader from '@material-ui/core/CardHeader';
-import CardContent from "@material-ui/core/CardContent";
+
 import withStyles from "@material-ui/core/styles/withStyles";
 import Typography from '@material-ui/core/Typography';
-
-// REDUX
-import { connect } from "react-redux";
-import store from "../../redux/store";
-
-
 
 
 
@@ -54,12 +45,6 @@ function EntryHistory(entry) {
                 {JSON.stringify(entry.entries.body)}
             </Typography>
         </div>
-
-
-
-
-
-
     )
 
 }

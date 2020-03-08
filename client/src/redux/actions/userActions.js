@@ -1,4 +1,4 @@
-import { SET_USER, SET_ERRORS, CLEAR_ERRORS, LOADING_UI, SET_UNAUTHENTICATED, LOADING_USER } from "../types";
+import { SET_USER, SET_ERRORS, CLEAR_ERRORS, LOADING_UI, SET_UNAUTHENTICATED, LOADING_USER, LOADING_DATA, GET_MOOD_RECORDS } from "../types";
 
 import axios from "axios";
 
@@ -53,4 +53,15 @@ const setAuthorizationHeader = (token) => {
     const FBIDToken = `Bearer ${token}`;
     localStorage.setItem("FBIDToken", FBIDToken);
     axios.defaults.headers.common["Authorization"] = FBIDToken;
+}
+
+export const getMoodRecords = () => (dispatch) => {
+    dispatch({ type: LOADING_DATA })
+
+    axios.get("https://us-central1-the-oz-project.cloudfunctions.net/api/moods")
+        .then(res => {
+            console.log("GETTING MOODS...")
+            dispatch({ type: GET_MOOD_RECORDS, payload: res.data })
+        })
+        .catch(err => console.log(`GETTING MOOD RECORDS ERROR: ${err}`))
 }

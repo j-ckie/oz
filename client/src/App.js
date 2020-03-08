@@ -9,7 +9,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 import { Provider } from "react-redux";
 import { SET_AUTHENTICATED } from "./redux/types";
-import { logoutUser, getUserData } from "./redux/actions/userActions";
+import { logoutUser, getUserData, getMoodRecords } from "./redux/actions/userActions";
 
 import login from "./pages/login";
 import signup from "./pages/signup";
@@ -41,6 +41,7 @@ if (token) {
         store.dispatch({ type: SET_AUTHENTICATED });
         axios.defaults.headers.common["Authorization"] = token;
         store.dispatch(getUserData());
+        store.dispatch(getMoodRecords());
     }
 
     // console.log("Checking token...")
