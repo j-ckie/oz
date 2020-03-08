@@ -138,11 +138,11 @@ exports.dialogflowGateway = functions.https.onRequest((request, response) => {
 
 
         })
-        .then(data => {
-            console.log(data)
-            request.user.name = data.docs[0].data().name;
-            request.user.imageUrl = data.docs[0].data().imageUrl;
-        })
+        // .then(data => {
+        //     console.log(data)
+        //     request.user.name = data.docs[0].data().name;
+        //     request.user.imageUrl = data.docs[0].data().imageUrl;
+        // })
         .catch(err => console.error(err));
 
 

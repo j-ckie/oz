@@ -154,6 +154,16 @@ iframe {
     padding: 5rem;
 }  */
 
+.centered-item {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.notif-button {
+    margin-bottom: 1.5rem;
+}
+
 @media screen and (max-width: 800px) {
     .rcw-conversation-container {
         margin-top: 55px;

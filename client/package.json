@@ -10,6 +10,7 @@
     "@testing-library/user-event": "^7.1.2",
     "axios": "^0.19.2",
     "dayjs": "^1.8.21",
+    "firebase": "^7.10.0",
     "jwt-decode": "^2.2.0",
     "react": "^16.13.0",
     "react-chat-widget": "^2.1.5",

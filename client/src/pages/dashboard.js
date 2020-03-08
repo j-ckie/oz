@@ -1,6 +1,7 @@
 import React from 'react';
 import Chat from "../Components/chatbot/Chat";
 import EntryCarousel from "../Components/dashboard/EntryCarousel";
+import NotificationButton from "../Components/dashboard/NotificationButton";
 
 // mui
 import Typography from "@material-ui/core/Typography";
@@ -27,7 +28,9 @@ function Dashboard(props) {
             <Grid item xs={10} sm={8}>
                 <Typography variant="h2">Dashboard <span className="accent centered small-h4">Welcome {name}!</span></Typography>
                 <br />
-
+                <div className="centered-item notif-button">
+                    <NotificationButton />
+                </div>
                 <h2 className="accent thin">I am grateful for...</h2>
                 <div className="spacer-sm"></div>
                 <EntryCarousel />
