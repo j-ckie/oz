@@ -76,8 +76,16 @@ p {
     margin-top: 0;
 }
 
+.thin {
+    font-weight: 200;
+    margin: 0;
+}
+
 .spacer {
     height: 10rem;
+}
+.spacer-sm {
+    height: 1.5rem;
 }
 
 .videoPlayer {

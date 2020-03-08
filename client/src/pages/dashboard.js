@@ -28,14 +28,9 @@ function Dashboard(props) {
                 <Typography variant="h2">Dashboard <span className="accent centered small-h4">Welcome {name}!</span></Typography>
                 <br />
 
-                <Card className="dashboard-card card">
-                    <CardContent className="content">
-                        <CardHeader title="I am grateful for..." />
-
-                        <EntryCarousel />
-
-                    </CardContent>
-                </Card>
+                <h2 className="accent thin">I am grateful for...</h2>
+                <div className="spacer-sm"></div>
+                <EntryCarousel />
                 <Chat />
             </Grid>
             <Grid item xs={1} sm={2} />

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import { initializeFirebase } from './firebase-messaging-sw';
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
