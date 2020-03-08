@@ -58,17 +58,14 @@ const {
 // ======= entry handlers =======
 const {
     postGratitudeEntry,
-    getEntries
+    getEntries,
+    getMoods,
+    postMood
     //     entryWeek,
     //     entryMonth
 } = require("./handlers/entries");
 
-// ======= rating handlers =======
-// const {
-//     postRating,
-//     postWeek,
-//     postMonth
-// } = require("./handlers/ratings");
+
 
 
 // ======= user routes =======
@@ -78,8 +75,10 @@ app.get("/user", fbAuth, viewUserDashboard);
 // app.get("/user", fbAuth, getUserDetails);
 
 // ======= entry routes =======
-app.post("/entry", postGratitudeEntry);
+app.post("/entry", fbAuth, postGratitudeEntry);
 app.get("/entries", fbAuth, getEntries);
+app.get("/moods", fbAuth, getMoods);
+app.post("/mood", fbAuth, postMood);
 // app.get("/entries/week", fbAuth, entryWeek);
 // app.get("/entries/month", fbAuth, entryMonth);
 
