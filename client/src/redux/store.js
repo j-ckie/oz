@@ -3,7 +3,7 @@ import thunk from 'redux-thunk';
 
 import userReducer from "./reducers/userReducer";
 import uiReducer from "./reducers/uiReducer";
-import chatReducer from "./reducers/chatReducer";
+import dataReducer from './reducers/dataReducer';
 
 const initialState = {};
 
@@ -12,7 +12,7 @@ const middleware = [thunk];
 const reducers = combineReducers({
     user: userReducer,
     UI: uiReducer,
-    chat: chatReducer
+    data: dataReducer
 })
 // eslint-disable-next-line no-underscore-dangle
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

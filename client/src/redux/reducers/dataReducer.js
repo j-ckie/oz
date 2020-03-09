@@ -1,4 +1,4 @@
-import { SET_CHAT_TIMESTAMP, SEND_GRATITUDE_ENTRY, GET_GRATITUDE_ENTRIES, LOADING_DATA, GET_MOOD_RECORDS } from "../types";
+import { GET_GRATITUDE_ENTRIES, LOADING_DATA, GET_MOOD_RECORDS } from "../types";
 
 const initialState = {
     timestamp: null,
@@ -9,16 +9,6 @@ const initialState = {
 
 export default function (state = initialState, action) {
     switch (action.type) {
-        case SET_CHAT_TIMESTAMP:
-            return {
-                ...state,
-                timestamp: new Date().toISOString()
-            }
-        case SEND_GRATITUDE_ENTRY:
-            return {
-                ...state,
-                scribble: action.payload
-            }
         case GET_GRATITUDE_ENTRIES:
             return {
                 ...state,

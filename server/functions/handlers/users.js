@@ -107,7 +107,20 @@ exports.viewUserDashboard = (req, res) => {
                         data.forEach(doc => {
                             userData.entries.push(doc.data());
                         });
-                        return res.json(userData);
+                        // return res.json(userData);
+                        db.collection("moods")
+                            .where("email", "==", req.user.email)
+                            .orderBy("createdAt", "desc")
+                            .limit(7)
+                            .get()
+                            .then(data => {
+                                userData.moods = [];
+                                data.forEach(doc => {
+                                    userData.moods.push(doc.data())
+                                })
+                                return res.json(userData);
+                            })
+
                     })
             }
         })

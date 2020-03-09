@@ -42,11 +42,13 @@ export const logoutUser = () => (dispatch) => {
 
 export const getUserData = () => (dispatch) => {
     dispatch({ type: LOADING_USER });
+
     axios.get("https://us-central1-the-oz-project.cloudfunctions.net/api/user")
         .then(res => {
             dispatch({ type: SET_USER, payload: res.data });
         })
         .catch(err => console.log(err))
+
 };
 
 const setAuthorizationHeader = (token) => {
@@ -55,13 +57,13 @@ const setAuthorizationHeader = (token) => {
     axios.defaults.headers.common["Authorization"] = FBIDToken;
 }
 
-export const getMoodRecords = () => (dispatch) => {
-    dispatch({ type: LOADING_DATA })
+// const getMoodRecords = () => (dispatch) => {
+//     dispatch({ type: LOADING_DATA })
 
-    axios.get("https://us-central1-the-oz-project.cloudfunctions.net/api/moods")
-        .then(res => {
-            console.log("GETTING MOODS...")
-            dispatch({ type: GET_MOOD_RECORDS, payload: res.data })
-        })
-        .catch(err => console.log(`GETTING MOOD RECORDS ERROR: ${err}`))
-}
+//     axios.get("https://us-central1-the-oz-project.cloudfunctions.net/api/moods")
+//         .then(res => {
+//             console.log("GETTING MOODS...")
+//             dispatch({ type: GET_MOOD_RECORDS, payload: res.data })
+//         })
+//         .catch(err => console.log(`GETTING MOOD RECORDS ERROR: ${err}`))
+// }

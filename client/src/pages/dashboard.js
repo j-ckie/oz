@@ -19,10 +19,7 @@ function dashboard(props) {
     const state = store.getState()
     const { user: { entries, moods, credentials: { name } } } = state;
 
-    console.log("ENTRIES:")
-    console.log(entries)
-    console.log("MOODS")
-    console.log(moods);
+    console.log(state)
 
     return (
         <Grid container spacing={2} >
