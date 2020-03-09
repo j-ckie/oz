@@ -10,6 +10,7 @@ import CardContent from "@material-ui/core/CardContent";
 // redux
 import store from "../../redux/store";
 
+
 function EntryCarousel(data) {
     const state = store.getState()
     const { user: { entries, loading } } = state;
@@ -82,12 +83,18 @@ function EntryCarousel(data) {
         }
     }
 
+    let entryMarkup = !loading ? (
+        entries.map(entry => <div className="entry-history"><EntryHistory entries={entry} /></div>)
+    ) : (
+            <p> Loading...</p>
+        )
+
     return (
         <Card className="card">
             <CardContent className="content">
                 <Swiper {...params}>
 
-                    {entries.map(entry => <div className="entry-history"><EntryHistory entries={entry} /></div>)}
+                    {entryMarkup}
 
                 </Swiper>
             </CardContent>

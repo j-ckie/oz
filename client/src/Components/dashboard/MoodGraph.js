@@ -1,13 +1,38 @@
 import React from "react";
 import { Line } from "react-chartjs-2";
+import dayjs from "dayjs";
+
+import store from "../../redux/store";
 
 
 function MoodGraph() {
+    const state = store.getState();
 
-    // let dateCreated = record.moods.createdAt;
+    console.log("====MOODGRAPH====")
+    console.log(state.user.moods)
+
+    let moodEntries = state.user.moods;
+
+    // let lastDate = moodEntries[0].createdAt
+    // console.log(`0: ${lastDate}`)
+    // let testDate = dayjs(lastDate).format("dddd");
+    // console.log(testDate)
+
+    let labels = [];
+    let points = [];
+
+    for (let i = (moodEntries.length - 1); i >= 0; i--) {
+        let date = moodEntries[i].createdAt;
+        let newLabel = dayjs(date).format("dddd")
+        labels.push(newLabel)
+
+        points.push(moodEntries[i].mood)
+    }
+
+
 
     const data = {
-        labels: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+        labels: labels,
         datasets: [
             {
                 label: 'Moods',
@@ -28,7 +53,7 @@ function MoodGraph() {
                 pointHoverBorderWidth: 2,
                 pointRadius: 1,
                 pointHitRadius: 10,
-                data: [9, 4, 6, 5, 8, 3, 5]
+                data: points
             }
         ]
     };
@@ -36,7 +61,7 @@ function MoodGraph() {
 
     return (
         <div>
-            <h2>This is how I've felt over the last week:</h2>
+            <h2 className="accent thin">This is how I've felt over the last week:</h2>
             <Line data={data} options={{
                 scales: {
                     yAxes: [{

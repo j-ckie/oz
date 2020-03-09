@@ -33,7 +33,7 @@ function dashboard(props) {
                 <h2 className="accent thin">I am grateful for...</h2>
                 <div className="spacer-sm"></div>
                 <EntryCarousel entries={entries} />
-                <div className="spacer"></div>
+                <br />
                 <MoodGraph moods={moods} />
                 <Chat />
             </Grid>
