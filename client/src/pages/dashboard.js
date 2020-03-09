@@ -15,7 +15,7 @@ import MoodGraph from "../Components/dashboard/MoodGraph";
 // redux
 import store from "../redux/store";
 
-function Dashboard(props) {
+function dashboard(props) {
     const state = store.getState()
     const { user: { entries, moods, credentials: { name } } } = state;
 
@@ -35,9 +35,9 @@ function Dashboard(props) {
                 </div>
                 <h2 className="accent thin">I am grateful for...</h2>
                 <div className="spacer-sm"></div>
-                <EntryCarousel moods={moods} />
+                <EntryCarousel entries={entries} />
                 <div className="spacer"></div>
-                <MoodGraph />
+                <MoodGraph moods={moods} />
                 <Chat />
             </Grid>
             <Grid item xs={1} sm={2} />
@@ -45,4 +45,4 @@ function Dashboard(props) {
     )
 }
 
-export default Dashboard;
+export default dashboard;

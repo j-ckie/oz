@@ -10,7 +10,7 @@ function MoodGraph() {
         labels: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
         datasets: [
             {
-                label: 'My First dataset',
+                label: 'Moods',
                 fill: false,
                 lineTension: 0.1,
                 backgroundColor: 'rgba(75,192,192,0.4)',
@@ -28,7 +28,7 @@ function MoodGraph() {
                 pointHoverBorderWidth: 2,
                 pointRadius: 1,
                 pointHitRadius: 10,
-                data: [65, 59, 80, 81, 56, 55, 40]
+                data: [9, 4, 6, 5, 8, 3, 5]
             }
         ]
     };
@@ -37,7 +37,16 @@ function MoodGraph() {
     return (
         <div>
             <h2>This is how I've felt over the last week:</h2>
-            <Line data={data} />
+            <Line data={data} options={{
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            max: 10,
+                            min: 0
+                        }
+                    }]
+                }
+            }} />
         </div>
     );
 }

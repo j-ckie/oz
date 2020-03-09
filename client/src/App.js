@@ -24,7 +24,7 @@ import themeFile from "./util/theme";
 
 import store from "./redux/store";
 
-import Dashboard from './pages/Dashboard';
+import dashboard from './pages/dashboard';
 
 const theme = createMuiTheme(themeFile);
 
@@ -40,8 +40,8 @@ if (token) {
     } else {
         store.dispatch({ type: SET_AUTHENTICATED });
         axios.defaults.headers.common["Authorization"] = token;
-        store.dispatch(getUserData());
         store.dispatch(getMoodRecords());
+        store.dispatch(getUserData());
     }
 
     // console.log("Checking token...")
@@ -60,8 +60,8 @@ function App() {
                             <Route exact path="/" component={home} />
                             <AuthRoute path="/login" component={login} />
                             <AuthRoute path="/signup" component={signup} />
-                            {/* <Route exact path="/dashboard" render={props => <Dashboard {...props} authenticated={authStatus} />} /> */}
-                            <UnAuthRoute exact path="/dashboard" component={Dashboard} />
+                            {/* <Route exact path="/dashboard" render={props => <dashboard {...props} authenticated={authStatus} />} /> */}
+                            <UnAuthRoute exact path="/dashboard" component={dashboard} />
                         </Switch>
                         <div className="spacer"></div>
                     </div>
