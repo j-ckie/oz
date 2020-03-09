@@ -13,7 +13,7 @@ const cors = require("cors");//({ origin: true });
 const functions = require("firebase-functions");
 const serviceAccount = require("./dialogflow-service-acc.json");
 
-var allowedOrigins = ['http://localhost:3000',
+var allowedOrigins = ['http://localhost:3000', 'https://the-oz-project.firebaseapp.com',
     'https://us-central1-the-oz-project.cloudfunctions.net',
     '*'];
 
