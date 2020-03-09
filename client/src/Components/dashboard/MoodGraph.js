@@ -31,7 +31,34 @@ function MoodGraph() {
 
 
 
-    const data = {
+    const weekData = {
+        labels: labels,
+        datasets: [
+            {
+                label: 'mood',
+                fill: false,
+                lineTension: 0.1,
+                backgroundColor: 'rgba(75,192,192,0.4)',
+                borderColor: 'rgba(75,192,192,1)',
+                borderCapStyle: 'butt',
+                borderDash: [],
+                borderDashOffset: 0.0,
+                borderJoinStyle: 'miter',
+                pointBorderColor: 'rgba(75,192,192,1)',
+                pointBackgroundColor: '#fff',
+                pointBorderWidth: 1,
+                pointHoverRadius: 5,
+                pointHoverBackgroundColor: 'rgba(75,192,192,1)',
+                pointHoverBorderColor: 'rgba(220,220,220,1)',
+                pointHoverBorderWidth: 2,
+                pointRadius: 1,
+                pointHitRadius: 10,
+                data: points
+            }
+        ]
+    };
+
+    const monthData = {
         labels: labels,
         datasets: [
             {
@@ -63,7 +90,7 @@ function MoodGraph() {
         <div>
             <h2 className="accent thin">This is how I've felt over the last week:</h2>
             <br />
-            <Line data={data} options={{
+            <Line data={weekData} options={{
                 scales: {
                     yAxes: [{
                         ticks: {
@@ -73,6 +100,19 @@ function MoodGraph() {
                     }]
                 }
             }} />
+            {/* <div className="spacer-sm"></div>
+            <h2 className="accent thin">Over the last 30 days:</h2>
+            <br />
+            <Line data={monthData} options={{
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            max: 10,
+                            min: 0
+                        }
+                    }]
+                }
+            }} /> */}
         </div>
     );
 }
