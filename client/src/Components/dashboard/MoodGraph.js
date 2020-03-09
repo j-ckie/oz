@@ -35,7 +35,7 @@ function MoodGraph() {
         labels: labels,
         datasets: [
             {
-                label: 'Moods',
+                label: 'mood',
                 fill: false,
                 lineTension: 0.1,
                 backgroundColor: 'rgba(75,192,192,0.4)',
@@ -62,6 +62,7 @@ function MoodGraph() {
     return (
         <div>
             <h2 className="accent thin">This is how I've felt over the last week:</h2>
+            <br />
             <Line data={data} options={{
                 scales: {
                     yAxes: [{
