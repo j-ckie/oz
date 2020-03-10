@@ -106,6 +106,7 @@ class signup extends Component {
                             value={this.state.password}
                             onChange={this.handleChange}
                             fullWidth />
+                        <small>Password must be at least 6 characters long</small>
                         <TextField
                             id="confirmPassword"
                             name="confirmPassword"

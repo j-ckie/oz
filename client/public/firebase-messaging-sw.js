@@ -12,7 +12,7 @@ messaging.setBackgroundMessageHandler(function (payload) {
     // Customize notification here
     const notificationTitle = 'theozproject';
     const notificationOptions = {
-        click_action: "http://localhost:3000",
+        click_action: "https://the-oz-project.firebaseapp.com/",
         icon: 'https://i.imgur.com/nwSt5DQ.png'
     };
 

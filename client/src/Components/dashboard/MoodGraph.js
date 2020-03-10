@@ -1,5 +1,5 @@
 import React from "react";
-import { Line } from "react-chartjs-2";
+import { Line, Bar } from "react-chartjs-2";
 import dayjs from "dayjs";
 
 import store from "../../redux/store";
@@ -90,7 +90,7 @@ function MoodGraph() {
         <div>
             <h2 className="accent thin">This is how I've felt over the last week:</h2>
             <br />
-            <Line data={weekData} options={{
+            <Bar data={weekData} options={{
                 scales: {
                     yAxes: [{
                         ticks: {

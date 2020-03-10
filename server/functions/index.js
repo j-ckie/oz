@@ -238,7 +238,7 @@ exports.dialogflowWebhook = functions.https.onRequest(async (request, response) 
 
         // addGratitudeEntry(Gratitude, userEmail);
         GratitudeList.forEach(element => {
-            if (element !== null) {
+            if (element !== undefined) {
                 let newEntry = {
                     body: element,
                     email: userEmail,
@@ -248,11 +248,13 @@ exports.dialogflowWebhook = functions.https.onRequest(async (request, response) 
                 db.collection("entries")
                     .add(newEntry)
                     .then(doc => {
-                        let resEntry = newEntry;
+                        //let resEntry = newEntry;
 
-                        resEntry.entryId = doc.id;
-                        response.json({ resEntry });
+                        //resEntry.entryId = doc.id;
+                        //response.json({ resEntry });
+
                         console.log("Gratitude Logged")
+
                     })
                     .catch(err => {
                         console.error(err)
@@ -262,9 +264,11 @@ exports.dialogflowWebhook = functions.https.onRequest(async (request, response) 
 
 
 
-                agent.add("Gratitude Logged!")
+
             }
         });
+
+        agent.add("Okay! I've recorded your entries for today.")
 
     }
     async function logMood(agent) {
@@ -287,17 +291,22 @@ exports.dialogflowWebhook = functions.https.onRequest(async (request, response) 
         db.collection("moods")
             .add(newEntry)
             .then(doc => {
-                let resEntry = newEntry;
+                //let resEntry = newEntry;
 
-                resEntry.entryId = doc.id;
-                response.json({ resEntry });
+                //resEntry.entryId = doc.id;
+                //response.json({ resEntry });
+
+                //
             })
             .catch(err => {
                 console.error(err)
                 response.status(500).json({ error: `Something went wrong when adding the entry` })
             })
 
-        agent.add("Mood Logged!")
+
+        agent.add("Alright! I've logged your mood today.")
+
+
     }
 
 
@@ -311,6 +320,7 @@ exports.dialogflowWebhook = functions.https.onRequest(async (request, response) 
     intentMap.set("LogGratitude-first-stop", logGratitude);  //user stopped after first entry, 1 entry to submit
     intentMap.set("LogGratitude-first-second-stop", logGratitude); //user stopped after second entry, 2 entries to submit
     intentMap.set("LogGratitude-first-second-third", logGratitude); //full flow, 3 entries to submit.
+    intentMap.set("LogGratitude-idk", logGratitude);
 
     intentMap.set("LogGratitude.first.second.third", logGratitude);
 

@@ -3,6 +3,7 @@ import { Widget, addResponseMessage, addLinkSnippet, addUserMessage, toggleMsgLo
 import axios from "axios";
 import store from "../../redux/store";
 import avatar from "../../img/oz-chat.png";
+import { getUserData } from '../../redux/actions/userActions';
 
 class Chat extends Component {
 
@@ -43,6 +44,7 @@ class Chat extends Component {
                 let botResponse = res.data.fulfillmentText;
                 toggleMsgLoader();
                 addResponseMessage(botResponse);
+                store.dispatch(getUserData());
             })
             .catch(err => console.error(err));
     }
