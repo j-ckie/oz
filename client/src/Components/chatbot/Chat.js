@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { Widget, addResponseMessage, addLinkSnippet, addUserMessage, toggleMsgLoader } from 'react-chat-widget';
 import axios from "axios";
 import store from "../../redux/store";
+import { LOADING_USER, SET_USER } from "../../redux/types"
 import avatar from "../../img/oz-chat.png";
-import { getUserData } from '../../redux/actions/userActions';
+// import { getUserData } from '../../redux/actions/userActions';
 
 class Chat extends Component {
 
@@ -44,7 +45,14 @@ class Chat extends Component {
                 let botResponse = res.data.fulfillmentText;
                 toggleMsgLoader();
                 addResponseMessage(botResponse);
-                store.dispatch(getUserData());
+                // store.dispatch(getUserData())
+                store.dispatch({ type: LOADING_USER });
+                axios.get("https://us-central1-the-oz-project.cloudfunctions.net/api/user")
+                    .then(res => {
+                        dispatch({ type: SET_USER, payload: res.data });
+                    })
+                    .catch(err => console.log(err))
+
             })
             .catch(err => console.error(err));
     }
